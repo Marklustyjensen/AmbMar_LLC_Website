@@ -12,8 +12,8 @@ export default function Home() {
             </h2>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
               AmbMar, LLC delivers modern web applications and reliable Vercel
-              hosting solutions tailored to your business needs, with expertise
-              in React, Next.js, and cutting-edge web technologies.
+              hosting solutions tailored to your personal or business needs,
+              with expertise in React and Next.js among other technologies.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -40,9 +40,9 @@ export default function Home() {
             <h3 className="text-4xl font-bold text-gray-900 mb-6">What I Do</h3>
             <div className="w-24 h-1 bg-blue-600 mx-auto mb-8"></div>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              I specialize in modern web application development and
-              professional Vercel hosting solutions for businesses seeking
-              innovative digital solutions
+              I specialize in modern web application development for both
+              personal and business use, along with professional Vercel hosting
+              solutions for those seeking innovative digital solutions
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
@@ -69,9 +69,9 @@ export default function Home() {
                 Software Portfolio
               </h4>
               <p className="text-gray-600">
-                Modern web applications, business analytics solutions, and
-                testing automation tools built with React, Next.js, and
-                TypeScript.
+                Explore my completed projects including web applications,
+                business solutions, and custom tools built with React, Next.js,
+                and TypeScript.
               </p>
             </Link>
             <Link
@@ -126,8 +126,8 @@ export default function Home() {
                 About AmbMar, LLC
               </h4>
               <p className="text-gray-600">
-                Learn about our founder's journey from Denmark to Colorado and
-                expertise in modern web development technologies.
+                Learn about my journey from Denmark to Colorado and expertise in
+                modern web development technologies.
               </p>
             </Link>
           </div>
@@ -141,9 +141,9 @@ export default function Home() {
             Ready to Start Your Project?
           </h3>
           <p className="text-xl mb-8 opacity-90">
-            Let's discuss how AmbMar, LLC's web application development and
-            Vercel hosting expertise can help solve your unique business
-            challenges.
+            Let's discuss how I can help you realize your vision. My web
+            application development and Vercel hosting expertise can help solve
+            your unique business challenges.
           </p>
           <Link
             href="/contact"

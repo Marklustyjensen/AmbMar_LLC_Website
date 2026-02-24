@@ -117,7 +117,7 @@ export default function About() {
           <h2 className="text-4xl font-bold mb-6">Ready to Work Together?</h2>
           <p className="text-xl mb-8 opacity-90">
             Let's discuss how my web application development expertise can help
-            solve your business and technical challenges.
+            solve your personal, business, and technical challenges.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

@@ -1,6 +1,76 @@
+'use client';
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    company: '',
+    budgetRange: '',
+    timeline: '',
+    projectDescription: '',
+    privacyAgree: false,
+  });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.privacyAgree) {
+      setErrorMessage('Please agree to the privacy terms to continue.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          company: '',
+          budgetRange: '',
+          timeline: '',
+          projectDescription: '',
+          privacyAgree: false,
+        });
+      } else {
+        const errorData = await response.json();
+        setSubmitStatus('error');
+        setErrorMessage(errorData.error || 'Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setErrorMessage('Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div className="font-sans">
       {/* Header */}
@@ -134,7 +204,22 @@ export default function Contact() {
               <h3 className="text-2xl font-semibold text-gray-900 mb-6">
                 Project Inquiry Form
               </h3>
-              <form className="space-y-6">
+              
+              {submitStatus === 'success' && (
+                <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                  <p className="font-medium">Thank you for your inquiry!</p>
+                  <p>I'll get back to you within 1-2 business days.</p>
+                </div>
+              )}
+              
+              {submitStatus === 'error' && (
+                <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                  <p className="font-medium">Error sending message:</p>
+                  <p>{errorMessage}</p>
+                </div>
+              )}
+              
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -142,6 +227,9 @@ export default function Contact() {
                     </label>
                     <input
                       type="text"
+                      name="firstName"
+                      value={formData.firstName}
+                      onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                       placeholder="Your first name"
@@ -153,6 +241,9 @@ export default function Contact() {
                     </label>
                     <input
                       type="text"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                       placeholder="Your last name"
@@ -166,6 +257,9 @@ export default function Contact() {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                     placeholder="your.email@example.com"
@@ -178,6 +272,9 @@ export default function Contact() {
                   </label>
                   <input
                     type="text"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                     placeholder="Your company or organization (optional)"
                   />
@@ -187,7 +284,12 @@ export default function Contact() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Budget Range
                   </label>
-                  <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors">
+                  <select 
+                    name="budgetRange"
+                    value={formData.budgetRange}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                  >
                     <option value="">Select budget range (optional)</option>
                     <option value="under-5k">Under $5,000</option>
                     <option value="5k-15k">$5,000 - $15,000</option>
@@ -201,7 +303,12 @@ export default function Contact() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Timeline
                   </label>
-                  <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors">
+                  <select 
+                    name="timeline"
+                    value={formData.timeline}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                  >
                     <option value="">Select timeline (optional)</option>
                     <option value="asap">ASAP</option>
                     <option value="1-month">Within 1 month</option>
@@ -218,6 +325,9 @@ export default function Contact() {
                   </label>
                   <textarea
                     rows={6}
+                    name="projectDescription"
+                    value={formData.projectDescription}
+                    onChange={handleInputChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                     placeholder="Please describe your project in detail. Include:&#10;• Project objectives and goals&#10;• Technical requirements or challenges&#10;• Any specific deliverables expected&#10;• Current situation or existing systems&#10;• Any other relevant information"
@@ -228,6 +338,9 @@ export default function Contact() {
                   <input
                     type="checkbox"
                     id="privacy-agree"
+                    name="privacyAgree"
+                    checked={formData.privacyAgree}
+                    onChange={handleInputChange}
                     required
                     className="mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                   />
@@ -243,9 +356,10 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 text-white py-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-lg shadow-lg hover:shadow-xl"
+                  disabled={isSubmitting}
+                  className="w-full bg-blue-600 text-white py-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-lg shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send Project Inquiry
+                  {isSubmitting ? 'Sending...' : 'Send Project Inquiry'}
                 </button>
               </form>
 

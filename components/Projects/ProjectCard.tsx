@@ -78,6 +78,7 @@ export default function ProjectCard({
           </div>
           <Link
             href={demoUrl}
+            target="_blank"
             className={`inline-flex items-center ${backgroundColor} text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity`}
           >
             View Demo site

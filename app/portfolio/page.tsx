@@ -1,8 +1,8 @@
 import Link from "next/link";
 import {
-  BusinessAnalyticsProject,
-  WebApplicationsProject,
-  TestingAutomationProject,
+  HotelOwnerPortalProject,
+  IncidentPortalProject,
+  RealEstatePlatformProject,
 } from "@/components/Projects";
 
 export default function Portfolio() {
@@ -25,11 +25,11 @@ export default function Portfolio() {
       <section className="py-20 bg-white ">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Featured Projects */}
-          <BusinessAnalyticsProject />
+          <HotelOwnerPortalProject />
           <hr className="my-12 border-t border-gray-300" />
-          <WebApplicationsProject />
+          <IncidentPortalProject />
           <hr className="my-12 border-t border-gray-300" />
-          <TestingAutomationProject />
+          <RealEstatePlatformProject />
         </div>
       </section>
 
