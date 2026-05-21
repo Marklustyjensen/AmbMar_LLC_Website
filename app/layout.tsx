@@ -18,6 +18,11 @@ export const metadata: Metadata = {
   title: "AmbMar, LLC - Software Development & Custom Solutions",
   description:
     "Professional software development and custom solutions by Mark Jensen. Independent contractor specializing in web applications, data analysis, and linguistic testing.",
+  icons: {
+    icon: "/Images/Logo.png",
+    shortcut: "/Images/Logo.png",
+    apple: "/Images/Logo.png",
+  },
 };
 
 export default function RootLayout({

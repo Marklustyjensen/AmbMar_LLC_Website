@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
@@ -31,9 +32,17 @@ export default function Navigation() {
           <div className="flex items-center">
             <Link
               href="/"
-              className="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors"
+              className="flex items-center gap-3 text-blue-600 hover:text-blue-700 transition-colors"
             >
-              AmbMar, LLC
+              <Image
+                src="/Images/Logo.png"
+                alt="AmbMar, LLC logo"
+                width={36}
+                height={36}
+                className="h-9 w-auto"
+                priority
+              />
+              <span className="text-xl font-bold">AmbMar, LLC</span>
             </Link>
           </div>
 
